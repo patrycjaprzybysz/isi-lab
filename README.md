@@ -97,9 +97,31 @@ a tutaj html do tej strony
 * Omów na podstawie swojej aplikacji komendy docker inspect i docker logs.
 * Czym są sieci w Dockerze? Zaprezentuj przykład na bazie swojego projektu.
   
-### Programowanie
+### 5. Programowanie
 
-* Przygotuj klasę Kalkulator z czterema wybranymi działaniami matematycznymi (jako metody) i bądź gotowy do utworenia obiektów i modyfikacji tejże klasy wg wytycznych.
-* Napisz skrypt, pobierajacy dane w formacie JSON ze wskazanego API (online, np. https://jsonplaceholder.typicode.com/photos) i zapisz te dane do pliku tekstowego.
-* Napisz skrypt, który odczytuje dane z pliku tekstowego i wyświetla je we wskazanej postaci.
-* Pokaż działanie dziedziczenia w programowaniu obiektowym, poprzez utworzenie klasy Person (jej atrybuty to name i surname) i klas z niej dziedziczących, które mają dodatkowe atrybuty i metody. Może to być np. kod/program dotyczący osób na uczelni lub osób w firmie z określoną hierarchią.
+#### 1. Przygotuj klasę Kalkulator z czterema wybranymi działaniami matematycznymi (jako metody) i bądź gotowy do utworenia obiektów i modyfikacji tejże klasy wg wytycznych.
+
+utworzyłam plik ``` kalkulator.py``` 
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/b19f4c87-c13a-4cf3-9809-f757949cc339)
+
+w pliku ```main.py``` odwołuje sie do tego pliku tworzac nowy obiekt ```kalkulator = Kalkulator()``` 
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/f391f5ba-2a26-45bb-9b27-181370a57fca)
+
+utworzyłam plik ```zaawansowany.py``` który dziedziczy po klasie kalkulator
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/3be9093f-59dc-43f6-b0a9-896f244459e6)
+
+w pliku ```main.py``` tworze obiekt na jego podstawie
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/31442738-fa8e-4851-824f-f0ce307bcc8a)
+
+tworzenie nowych obiektów wyglada tak
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/3e22f21d-c2ba-4569-8cd2-5854909ab4aa)
+
+#### 2. Napisz skrypt, pobierajacy dane w formacie JSON ze wskazanego API (online, np. https://jsonplaceholder.typicode.com/photos) i zapisz te dane do pliku tekstowego.
+
+#### 3. Napisz skrypt, który odczytuje dane z pliku tekstowego i wyświetla je we wskazanej postaci.
+#### 4. Pokaż działanie dziedziczenia w programowaniu obiektowym, poprzez utworzenie klasy Person (jej atrybuty to name i surname) i klas z niej dziedziczących, które mają dodatkowe atrybuty i metody. Może to być np. kod/program dotyczący osób na uczelni lub osób w firmie z określoną hierarchią.
