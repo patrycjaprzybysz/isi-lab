@@ -1,6 +1,6 @@
 # isi-lab
 
-###  Git
+###  1. Git
 
 * Utwórz nową gałąź (np. nowa) z bieżącej (najczęściej będzie to main), stwórz w nowej gałęzi nowy plik i zmerguj nową gałąź do bieżącej.
 * Pokaż jak działa pull request na jednym ze swoich repozytoriów.
@@ -8,7 +8,7 @@
 * Pokaż działanie git stash.
 * Omów działanie git rebase i wskaż różnice w stosunku do git merge (mile widziany rysunek).
   
-### Bazy danych
+### 2. Bazy danych
 
 * Za pomocą skryptu w wybranym języku dodaj kolejny rekord do wskazanej bazy danych.
 * Dla wybranej bazy danych pokaż działanie co najmniej trzech różnych typów JOIN'a.
@@ -16,13 +16,17 @@
 * Wskaż różnice między SQLite a PostgreSQL na wybranym przez siebie przykładzie.
 * Przygotuj zapytania zawierające polecenia WHERE, LIKE, COUNT, GROUP BY, HAVING i bądz gotowy do ich uruchomienia i modyfikacji.
   
-### Aplikacja wg wzorca projektowego MVC (Model-View-Controller)
+### 3. Aplikacja wg wzorca projektowego MVC (Model-View-Controller)
 
-* Czym jest ORM, zaprezentuj praktycznie na przykładzie własnego projektu.
+##### 1. Czym jest ORM, zaprezentuj praktycznie na przykładzie własnego projektu.
+* ORM (Object-Relational Mapping) to technika programowania, która umożliwia mapowanie obiektów w kodzie na rekordy w bazie danych. W praktyce oznacza to, że zamiast korzystać bezpośrednio z języka SQL do operacji na bazie danych, możemy używać obiektów w naszym kodzie, a ORM zajmie się tłumaczeniem tych operacji na odpowiednie zapytania SQL.
 * Czym jest wzorzec MVC? Wskaż w kodzie aplikacji poszczególne elementy tego wzorca i określ ich role.
 * Dodaj nowy URL w aplikacji i spraw, aby po uruchomieniu go w przeglądarce pojawiło się Twoje imię i nazwisko.
 * Dodaj nowy URL w aplikacji i spraw, aby po uruchomieniu go w przeglądarce pojawił się formularz, który pozwala dodać dwie liczby.
 * Dodaj nowy URL w aplikacji i spraw, aby po uruchomieniu go w przeglądarce wyświetliły się cztery zdjęcia ze strony https://jsonplaceholder.typicode.com/photos.
+
+
+
   
 ### Docker
 
