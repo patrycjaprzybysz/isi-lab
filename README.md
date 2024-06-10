@@ -123,5 +123,31 @@ tworzenie nowych obiektów wyglada tak
 
 #### 2. Napisz skrypt, pobierajacy dane w formacie JSON ze wskazanego API (online, np. https://jsonplaceholder.typicode.com/photos) i zapisz te dane do pliku tekstowego.
 
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/4febadac-7ed0-436b-b872-d862c1ca30c0)
+
+zapisany plik person.json
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/0986c913-d727-41a6-ad0d-2dedb518d354)
+
+
 #### 3. Napisz skrypt, który odczytuje dane z pliku tekstowego i wyświetla je we wskazanej postaci.
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/2196cd6a-a177-4e3b-b9f6-b196129eb776)
+
 #### 4. Pokaż działanie dziedziczenia w programowaniu obiektowym, poprzez utworzenie klasy Person (jej atrybuty to name i surname) i klas z niej dziedziczących, które mają dodatkowe atrybuty i metody. Może to być np. kod/program dotyczący osób na uczelni lub osób w firmie z określoną hierarchią.
+
+klasa Person 
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/81c5b9f8-776d-41be-94f1-b27b33689f4a)
+
+klasa Student
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/24959ec5-f138-4c10-b99b-88668ca62ae1)
+
+klasa Teacher
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/3218534d-1d24-49b6-95e4-87dd0164ce26)
+
+plik ```main2.py``` 
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/4e723dbf-03b6-49ac-9716-b9886f90a1e9)
