@@ -57,72 +57,188 @@ git pull origin main
 
 #### 4. Pokaż działanie git stash.
 
+git stash pozwala na tymczasowe zapisanie zmian w czystym repozytorium. Jest to przydatne, gdy chcesz przełączyć się na inną gałąź bez konieczności commitowania niedokończonej pracy.
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/80733c08-2169-47c8-a817-63f007382875)
+
+* Stwórz zmiany w repozytorium:
+* 
+```
+echo "Niezapisane zmiany" > plik.txt
+git add plik.txt
+```
+
+* Użyj git stash do tymczasowego zapisania zmian:
+  
+```
+git stash
+```
+* Sprawdź stan repozytorium (zmiany zostały zapisane i usunięte z bieżącej gałęzi):
+
+```
+git status
+```
+
+* Przywróć zmiany z stash:
+
+```
+git stash pop
+```
+
 
 #### 5. Omów działanie git rebase i wskaż różnice w stosunku do git merge (mile widziany rysunek).
 
+```git merge```: Tworzy dodatkowy commit scalający, który łączy dwie historie.
+```git rebase```: Przenosi commity z jednej gałęzi na szczyt innej, tworząc liniową historię.
+
+Obie metody mają swoje zastosowania. merge jest bezpieczniejszy, ponieważ zachowuje pełną historię, natomiast rebase jest użyteczny, gdy chcesz utrzymać czystszą i liniową historię commitów.
+
+A---B---C---D---E  main
+     \       /
+      \     /
+       F---G  feature-branch
 
 
+A---B---C---D---E---F'---G'  main, feature-branch
   
 ### 2. Bazy danych
 
 #### 1. Za pomocą skryptu w wybranym języku dodaj kolejny rekord do wskazanej bazy danych.
 
-utworzyłam kontener dla bazy danych 
-
-```
-docker run --name baza_postgres --detach -e POSTGRES_PASSWORD=haslo postgres
-```
-
-![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/08f9e053-0530-460f-b3e0-d2e0e2743e44)
-
-
-utworzyłam baze danych
-
-```
-docker exec -it baza_postgres psql -U postgres
-```
-![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/e39e652f-a79a-4f10-8a58-d28dc6895ae8)
-
-
-
-
-
-utworzyłam tabele i wstawiłam do nich rekordy
-
-```
-
-
-
-
-
-
-```
-
-![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/a33ebfab-e91f-4613-a487-3350d23f0493)
-
-
-```
-
-
-
-```
-sprawdziłam działanie bazy danych
-
-```
-docker exec -it baza_postgres psql -U postgres -d postgres -c "SELECT * FROM students;"
-```
-
-![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/17490717-8ac8-4b0e-aa8f-88a9ed044ccc)
-
-
-
-
 
 #### 2. Dla wybranej bazy danych pokaż działanie co najmniej trzech różnych typów JOIN'a.
-#### 3. Zaloguj się do bazy danych PostgreSQL w kontenerze Dockerowym i wykonaj operację SELECT dla dowolnej tabeli.
-#### 4. Wskaż różnice między SQLite a PostgreSQL na wybranym przez siebie przykładzie.
-#### 5. Przygotuj zapytania zawierające polecenia WHERE, LIKE, COUNT, GROUP BY, HAVING i bądz gotowy do ich uruchomienia i modyfikacji.
+
+utworzyłam tabele
+
+```
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    product TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+```
+
+umiesciałm dane do tabeli
+
+```
+INSERT INTO users (name, email) VALUES
+('John Doe', 'john.doe@example.com'),
+('Jane Smith', 'jane.smith@example.com'),
+('Alice Johnson', 'alice.johnson@example.com');
+
+INSERT INTO orders (user_id, product, quantity) VALUES
+(1, 'Laptop', 1),
+(2, 'Smartphone', 2),
+(3, 'Tablet', 1),
+(1, 'Headphones', 1);
+
+```
+
+* inner join
+INNER JOIN zwraca tylko te wiersze, które mają pasujące wartości w obu tabelach.
   
+```
+SELECT users.name, orders.product
+FROM users
+INNER JOIN orders ON users.id = orders.user_id;
+```
+
+* left join
+LEFT JOIN zwraca wszystkie wiersze z lewej tabeli (users), nawet jeśli nie mają pasujących rekordów w prawej tabeli (orders).
+
+```
+SELECT users.name, orders.product
+FROM users
+LEFT JOIN orders ON users.id = orders.user_id;
+
+```
+
+* right join ale sqlite nieobsługuje right joina więc odwrociłam left joina
+RIGHT JOIN zwraca wszystkie wiersze z prawej tabeli (orders), nawet jeśli nie mają pasujących rekordów w lewej tabeli (users).
+
+```
+SELECT users.name, orders.product
+FROM orders
+LEFT JOIN users ON users.id = orders.user_id;
+```
+
+#### 3. Zaloguj się do bazy danych PostgreSQL w kontenerze Dockerowym i wykonaj operację SELECT dla dowolnej tabeli.
+
+```
+ docker exec -it baza_postgres psql -U postgres -d postgres -c "SELECT * FROM students;"
+```
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/e52cef08-3b1c-4ec9-b86e-4b38d5e3fd8b)
+
+aby wstawiać rekordy do bazy np potem insert albo create
+
+```
+ docker exec -it baza_postgres psql -U postgres
+```
+```
+CREATE TABLE students2( id SERIAL PRIMARY_KEY, student_id INT REFERENCES students2(id), course_name VARCHAR(100));
+```
+```
+INSERT INTO students2 (name) VALUES ('Jan Kowalski');
+```
+#### 4. Wskaż różnice między SQLite a PostgreSQL na wybranym przez siebie przykładzie.
+
+* PostgreSQL wymaga oddzielnego procesu serwera i konfiguracji, podczas gdy SQLite jest prostszy w użyciu i nie wymaga oddzielnego serwera ani konfiguracji.
+* w SQlite nie ma RIGHT JOIN
+
+
+#### 5. Przygotuj zapytania zawierające polecenia WHERE, LIKE, COUNT, GROUP BY, HAVING i bądz gotowy do ich uruchomienia i modyfikacji.
+
+* WHERE
+
+```
+SELECT * 
+FROM users
+WHERE name = 'John Doe';
+```
+
+* LIKE
+
+```
+SELECT * 
+FROM users 
+WHERE name LIKE 'J%';
+```
+
+* COUNT
+
+```
+SELECT users.name, COUNT(orders.id) AS orders_count
+FROM users
+LEFT JOIN orders ON users.id = orders.user_id
+GROUP BY users.id;
+
+```
+
+* GROUP BY
+```
+SELECT product, COUNT(id) AS orders_count
+FROM orders
+GROUP BY product;
+
+```
+* HAVING
+
+```
+SELECT product, COUNT(id) AS orders_count
+FROM orders
+GROUP BY product
+HAVING COUNT(id) > 0;
+```
+
 ### 3. Aplikacja wg wzorca projektowego MVC (Model-View-Controller)
 
 #### 1. Czym jest ORM, zaprezentuj praktycznie na przykładzie własnego projektu.
