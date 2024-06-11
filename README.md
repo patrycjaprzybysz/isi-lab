@@ -10,11 +10,96 @@
   
 ### 2. Bazy danych
 
-* Za pomocą skryptu w wybranym języku dodaj kolejny rekord do wskazanej bazy danych.
-* Dla wybranej bazy danych pokaż działanie co najmniej trzech różnych typów JOIN'a.
-* Zaloguj się do bazy danych PostgreSQL w kontenerze Dockerowym i wykonaj operację SELECT dla dowolnej tabeli.
-* Wskaż różnice między SQLite a PostgreSQL na wybranym przez siebie przykładzie.
-* Przygotuj zapytania zawierające polecenia WHERE, LIKE, COUNT, GROUP BY, HAVING i bądz gotowy do ich uruchomienia i modyfikacji.
+#### 1. Za pomocą skryptu w wybranym języku dodaj kolejny rekord do wskazanej bazy danych.
+
+utworzyłam kontener dla bazy danych 
+
+```
+docker run --name postgres-container -e POSTGRES_PASSWORD=password -d postgres
+```
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/ad6fc479-c1a4-4e1f-a6ff-57160e108ace)
+
+utworzyłam baze danych
+
+```
+docker exec -it postgres-container psql -U postgres
+```
+```
+CREATE DATABASE test_db;
+```
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/d14a1bac-db9a-43f4-bfdf-142829e13527)
+
+połaczyłam sie z bazą danych
+
+```
+ \c test_db
+```
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/8f731d36-3c2a-4892-a01c-c21f16b70922)
+
+utworzyłam tabele
+
+```
+CREATE TABLE customers (
+    customer_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100)
+);
+
+CREATE TABLE orders (
+    order_id SERIAL PRIMARY KEY,
+    order_date DATE,
+    customer_id INT REFERENCES customers(customer_id)
+);
+
+CREATE TABLE products (
+    product_id SERIAL PRIMARY KEY,
+    product_name VARCHAR(100),
+    price NUMERIC(10, 2)
+);
+
+CREATE TABLE order_items (
+    order_item_id SERIAL PRIMARY KEY,
+    order_id INT REFERENCES orders(order_id),
+    product_id INT REFERENCES products(product_id),
+    quantity INT
+);
+
+```
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/ed2d7bf1-3511-4900-8720-a59a5c4bd8d8)
+
+i wstawiłam rekordy do tabeli
+
+```
+INSERT INTO customers (name, email) VALUES
+('John Doe', 'john@example.com'),
+('Jane Smith', 'jane@example.com');
+
+INSERT INTO products (product_name, price) VALUES
+('Laptop', 999.99),
+('Phone', 499.99);
+
+INSERT INTO orders (order_date, customer_id) VALUES
+('2023-01-01', 1),
+('2023-01-02', 2);
+
+INSERT INTO order_items (order_id, product_id, quantity) VALUES
+(1, 1, 1),
+(1, 2, 2),
+(2, 2, 1);
+```
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/9ee16d4d-7f3d-477d-8d80-dd307bd37aba)
+
+
+
+#### 2. Dla wybranej bazy danych pokaż działanie co najmniej trzech różnych typów JOIN'a.
+#### 3. Zaloguj się do bazy danych PostgreSQL w kontenerze Dockerowym i wykonaj operację SELECT dla dowolnej tabeli.
+#### 4. Wskaż różnice między SQLite a PostgreSQL na wybranym przez siebie przykładzie.
+#### 5. Przygotuj zapytania zawierające polecenia WHERE, LIKE, COUNT, GROUP BY, HAVING i bądz gotowy do ich uruchomienia i modyfikacji.
   
 ### 3. Aplikacja wg wzorca projektowego MVC (Model-View-Controller)
 
