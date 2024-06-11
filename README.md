@@ -2,11 +2,66 @@
 
 ###  1. Git
 
-* Utwórz nową gałąź (np. nowa) z bieżącej (najczęściej będzie to main), stwórz w nowej gałęzi nowy plik i zmerguj nową gałąź do bieżącej.
-* Pokaż jak działa pull request na jednym ze swoich repozytoriów.
-* Omów różnicę między git fetch a git pull na przykładzie swojego repozytorium.
-* Pokaż działanie git stash.
-* Omów działanie git rebase i wskaż różnice w stosunku do git merge (mile widziany rysunek).
+#### 1. Utwórz nową gałąź (np. nowa) z bieżącej (najczęściej będzie to main), stwórz w nowej gałęzi nowy plik i zmerguj nową gałąź do bieżącej.
+
+* Utwórz nową gałąź:
+
+```git checkout -b nowa```
+
+To polecenie tworzy nową gałąź o nazwie nowa i przełącza się na nią.
+
+* Stwórz nowy plik i dodaj go do repozytorium:
+
+```
+echo "Zawartość nowego pliku" > nowy_plik.txt
+git add nowy_plik.txt
+git commit -m "Dodano nowy plik w gałęzi nowa"
+```
+
+* Przełącz się z powrotem na gałąź główną:
+
+```git checkout main```
+
+* Scal gałąź nowa z gałęzią main:
+  
+```git merge nowa```
+
+#### 2. Pokaż jak działa pull request na jednym ze swoich repozytoriów.
+
+wypycha zmiany z lokalngo na zdalne repo
+
+```
+git push origin nowa
+```
+następnie na gitcie naciskam na ```Compare & pull request```
+Wypełniam szczegóły pull requesta i klikam ```Create pull request```
+a potem merguje
+
+#### 3. Omów różnicę między git fetch a git pull na przykładzie swojego repozytorium.
+
+*  ```git fetch```
+*  
+git fetch pobiera dane z zdalnego repozytorium, ale nie aktualizuje automatycznie lokalnych gałęzi. Pozwala to na przeglądanie zmian bez wprowadzania ich do swojego lokalnego repozytorium.
+
+```
+git log origin/main
+
+```
+*  ```git pull ```
+
+git pull pobiera dane z zdalnego repozytorium i automatycznie łączy je z bieżącą gałęzią. Jest to połączenie git fetch i git merge.
+
+```
+git pull origin main
+```
+
+#### 4. Pokaż działanie git stash.
+
+
+#### 5. Omów działanie git rebase i wskaż różnice w stosunku do git merge (mile widziany rysunek).
+
+
+
   
 ### 2. Bazy danych
 
