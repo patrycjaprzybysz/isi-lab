@@ -40,7 +40,7 @@ a potem merguje
 #### 3. Omów różnicę między git fetch a git pull na przykładzie swojego repozytorium.
 
 *  ```git fetch```
-*  
+    
 git fetch pobiera dane z zdalnego repozytorium, ale nie aktualizuje automatycznie lokalnych gałęzi. Pozwala to na przeglądanie zmian bez wprowadzania ich do swojego lokalnego repozytorium.
 
 ```
