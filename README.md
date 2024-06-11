@@ -15,84 +15,51 @@
 utworzyłam kontener dla bazy danych 
 
 ```
-docker run --name postgres-container -e POSTGRES_PASSWORD=password -d postgres
+docker run --name baza_postgres --detach -e POSTGRES_PASSWORD=haslo postgres
 ```
 
-![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/ad6fc479-c1a4-4e1f-a6ff-57160e108ace)
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/08f9e053-0530-460f-b3e0-d2e0e2743e44)
+
 
 utworzyłam baze danych
 
 ```
-docker exec -it postgres-container psql -U postgres
+docker exec -it baza_postgres psql -U postgres
 ```
-```
-CREATE DATABASE test_db;
-```
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/e39e652f-a79a-4f10-8a58-d28dc6895ae8)
 
-![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/d14a1bac-db9a-43f4-bfdf-142829e13527)
 
-połaczyłam sie z bazą danych
 
-```
- \c test_db
-```
 
-![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/8f731d36-3c2a-4892-a01c-c21f16b70922)
 
-utworzyłam tabele
-
-```
-CREATE TABLE customers (
-    customer_id SERIAL PRIMARY KEY,
-    name VARCHAR(100),
-    email VARCHAR(100)
-);
-
-CREATE TABLE orders (
-    order_id SERIAL PRIMARY KEY,
-    order_date DATE,
-    customer_id INT REFERENCES customers(customer_id)
-);
-
-CREATE TABLE products (
-    product_id SERIAL PRIMARY KEY,
-    product_name VARCHAR(100),
-    price NUMERIC(10, 2)
-);
-
-CREATE TABLE order_items (
-    order_item_id SERIAL PRIMARY KEY,
-    order_id INT REFERENCES orders(order_id),
-    product_id INT REFERENCES products(product_id),
-    quantity INT
-);
+utworzyłam tabele i wstawiłam do nich rekordy
 
 ```
 
-![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/ed2d7bf1-3511-4900-8720-a59a5c4bd8d8)
 
-i wstawiłam rekordy do tabeli
+
+
+
 
 ```
-INSERT INTO customers (name, email) VALUES
-('John Doe', 'john@example.com'),
-('Jane Smith', 'jane@example.com');
 
-INSERT INTO products (product_name, price) VALUES
-('Laptop', 999.99),
-('Phone', 499.99);
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/a33ebfab-e91f-4613-a487-3350d23f0493)
 
-INSERT INTO orders (order_date, customer_id) VALUES
-('2023-01-01', 1),
-('2023-01-02', 2);
 
-INSERT INTO order_items (order_id, product_id, quantity) VALUES
-(1, 1, 1),
-(1, 2, 2),
-(2, 2, 1);
 ```
 
-![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/9ee16d4d-7f3d-477d-8d80-dd307bd37aba)
+
+
+```
+sprawdziłam działanie bazy danych
+
+```
+docker exec -it baza_postgres psql -U postgres -d postgres -c "SELECT * FROM students;"
+```
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/17490717-8ac8-4b0e-aa8f-88a9ed044ccc)
+
+
 
 
 
@@ -170,17 +137,148 @@ a tutaj html do tej strony
 
 
   
-### Docker
+### 4. Docker
 
-* Utwórz plik z obrazem Dockerfile, w którym z hosta do kontenera kopiowany będzie folder code (zawiera np. jeden skrypt w języku Python 🐍) i zbuduj go:
-** uruchom ww. skrypt wewnątrz kontenera.
-* Skopiuj wybrany plik tekstowy z hosta (swojego komputera) do kontenera Dockerowego.
-* Skopiuj wybrany plik tekstowy z kontenera Dockerowego do hosta (swojego komputera).
-* Pokaż użycie komend ENTRYPOINT i CMD.
-* Pokaż użycie komend ADD i COPY i WORKDIR w swoim projekcie.
-* Pokaż działanie docker compose w swoim projekcie.
-* Omów na podstawie swojej aplikacji komendy docker inspect i docker logs.
-* Czym są sieci w Dockerze? Zaprezentuj przykład na bazie swojego projektu.
+#### 1. Utwórz plik z obrazem Dockerfile, w którym z hosta do kontenera kopiowany będzie folder code (zawiera np. jeden skrypt w języku Python 🐍) i zbuduj go:
+
+utworzyłam skrypt w pythonie ```script.py```
+
+utworzyłam plik ```Dockerfile``` 
+
+```
+FROM python:3.9
+
+# katalog /app w kontenerze
+WORKDIR /app
+
+# kopiowanie zawartosci folderu pythonProject z hosta do kontenera w katalogu /app
+COPY code/pythonProject/ /app
+
+# Skrypt pythona uruchomiony
+CMD ["python", "script.py"]
+
+
+```
+
+zbudowałam go
+
+```
+docker build -t my-python-app .
+
+```
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/ed9f0d9e-1b27-4158-b1e0-e1113e283344)
+
+
+uruchom ww. skrypt wewnątrz kontenera.
+
+```
+docker run my-python-app
+```
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/66b3899c-65cf-4025-8f0b-7e5dc531c805)
+
+
+#### 2. Skopiuj wybrany plik tekstowy z hosta (swojego komputera) do kontenera Dockerowego.
+
+utworzyłam nowy kontener
+
+```
+docker run -it --name my_container python
+```
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/59d894bc-f0a4-41ab-99ef-a7dc4a57b916)
+
+kopiowanie pliku tekstewego do kontenera
+
+```
+docker cp C:/Users/patip/ISI-laby/docker/data/sample.txt my_container:/app
+```
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/1467d894-66cd-4679-953b-894de83495cd)
+
+#### 3. Skopiuj wybrany plik tekstowy z kontenera Dockerowego do hosta (swojego komputera).
+
+```
+docker cp my_container:/app C:/Users/patip/ISI-laby/docker/data/
+```
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/a09ac02e-041b-4799-936e-eccb452edcfb)
+
+
+#### 4. Pokaż użycie komend ENTRYPOINT i CMD.
+
+utworzyłam nowy projket z ```app.py``
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/b0ad3d34-f195-41e3-b58a-87a93a478044)
+
+utworzyłam ```cmd.Dockerfile```
+
+```
+FROM python:3.9
+
+WORKDIR /app
+
+COPY . /app
+
+RUN pip install flask
+
+CMD ["python", "app.py"]
+```
+ zbudowałam go
+
+ ```
+ docker build -f cmd.Dockerfile -t cmd .
+```
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/dfe10360-b0b5-4f3b-b01b-22ff2adbb985)
+
+teraz gdy chce dodac nowe polecenie do cmd np /dev to reszta polecen sie nie wykonana
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/da64daac-4972-4d41-bf3f-b39a25b5a7d2)
+
+gdy uzyje entrypoint bede mogła dopisac polecenie
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/ac6e0192-e834-4ea1-ac14-c960d418e4f9)
+
+```
+docker build -f entrypoint.Dockerfile -t entrypoint .
+```
+i następnie dopisze komende ```docker run entrypoint /dev``` zostanie ona wykonana na końcu, dopisana.
+
+#### 5. Pokaż użycie komend ADD i COPY i WORKDIR w swoim projekcie.
+
+```add``` działa jak ```copy``` Kopiuje pliki i katalogi z lokalnego systemu plików do systemu plików obrazu Docker z tą różnica ze moze kopiować z linku i pliki tar.
+```workdir``` utworzy katalog jesli nie istenije, ustawia katalog roboczy dla wszystkich kolejnych instrukcji tzn. jesli ustawimy katalog /app to wszytskie polecenia np COPY test.txt będą zapisywane w tym katalogu
+
+```
+FROM ubuntu
+WORKDIR /app
+COPY text.txt .
+CMD pwd && ls
+```
+
+#### 6. Pokaż działanie docker compose w swoim projekcie.
+
+podstawowy ```docker-compose```
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/1ac7f821-1158-41cf-9f16-52a8f7014bd9)
+
+aby zbudować nalezy wpisac ```docker-compose up```
+
+
+#### 7. Omów na podstawie swojej aplikacji komendy docker inspect i docker logs.
+
+```docker inspect``` zawiera wszytskie informacje o kontenerze, jak nazywa się jego sieć z jakiego portu korzysta, jaki ma obraz, czego uzywa dockerfile (cmd).
+```docker logs``` służy do wyświetlania dzienników kontenera. Pozwala na przeglądanie wszystkich logów wypisywanych przez procesy wewnątrz kontenera.
+
+#### 8. Czym są sieci w Dockerze? Zaprezentuj przykład na bazie swojego projektu.
+
+Sieci w Dockerze służą do zarządzania łącznością między kontenerami i hostami. Umożliwiają komunikację między różnymi kontenerami oraz łączność z zasobami sieciowymi na hoście. Docker oferuje kilka rodzajów sieci, takich jak bridge, host, overlay, macvlan itp.
+
+```docker-compose``` z siecią my_network
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/9cba261a-c5a0-465a-a6d2-99b7d970bbc3)
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/b13284df-57f3-4027-8589-310074a78478)
+
+![image](https://github.com/patrycjaprzybysz/isi-lab/assets/100605325/2b7e72a2-bafc-40d4-82eb-3a5224f95b61)
+
   
 ### 5. Programowanie
 
